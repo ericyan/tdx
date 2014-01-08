@@ -8,7 +8,7 @@ module Tdx
       @quotes = []
       (data.size / 32).times do |line|
         data.pos = line * 32
-        @quotes << Parser.read(data)
+        @quotes << Parsers::EoD.read(data)
       end
     end
   end
