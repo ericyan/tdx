@@ -9,7 +9,7 @@ module Tdx
 
         (file.size / 32).times do |line|
           file.pos = line * 32
-          quotes << Quote.read(file)
+          quotes << Quote.new.read(file)
         end
 
         return quotes
@@ -28,7 +28,7 @@ module Tdx
         skip    length: 4   # Reserved
 
         def read(data)
-          super(data)
+          super
 
           return {
             date:     Date.parse(date.to_s),
