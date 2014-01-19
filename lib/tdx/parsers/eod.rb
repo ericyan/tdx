@@ -5,7 +5,7 @@ module Tdx
   module Parsers
     class EoD
       def self.parse(file)
-        quotes = []
+        quotes = Tdx::Data::Feed.new
 
         (file.size / 32).times do |line|
           file.pos = line * 32
@@ -30,15 +30,17 @@ module Tdx
         def read(data)
           super
 
-          return {
-            date:     Date.parse(date.to_s),
-            open:     open / 100.00,
-            high:     high / 100.00,
-            low:      low / 100.00,
-            close:    close / 100.00,
-            turnover: turnover.to_i,
-            volume:   volume
-          }
+          return Tdx::Data::Candlestick.new(
+            Date.parse(date.to_s).to_time + 3600 * 15,
+            {
+              open:     open / 100.00,
+              high:     high / 100.00,
+              low:      low / 100.00,
+              close:    close / 100.00,
+              turnover: turnover.to_i,
+              volume:   volume
+            }
+          )
         end
       end
     end
