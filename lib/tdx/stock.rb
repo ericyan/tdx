@@ -1,14 +1,19 @@
 module Tdx
   class Stock
-    attr_reader :quotes
+    def initialize(symbol)
+      @symbol = symbol
+    end
 
-    def initialize(symbol, interval = nil)
-      if interval == 5
-        file = Data::File.open("data/#{symbol}.5", 'rb')
+    def quotes(time_step = 240)
+      case time_step
+      when 5
+        file = Data::File.open("data/#{@symbol}.5", 'rb')
         @quotes = Parsers::FiveMinutes.parse(file)
-      else
-        file = Data::File.open("data/#{symbol}.day", 'rb')
+      when 240
+        file = Data::File.open("data/#{@symbol}.day", 'rb')
         @quotes = Parsers::EoD.parse(file)
+      else
+        raise ArgumentError, 'Invalid time step'
       end
     end
   end
