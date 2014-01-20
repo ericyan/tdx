@@ -6,11 +6,7 @@ module Tdx
     class EoD
       def self.parse(file)
         quotes = Tdx::Data::Feed.new
-
-        (file.size / 32).times do |line|
-          file.pos = line * 32
-          quotes << Quote.new.read(file)
-        end
+        file.each_record { |data| quotes << Quote.new.read(data) }
 
         return quotes
       end

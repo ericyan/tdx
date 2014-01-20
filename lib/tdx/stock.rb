@@ -4,10 +4,10 @@ module Tdx
 
     def initialize(symbol, interval = nil)
       if interval == 5
-        file = File.open("data/#{symbol}.5", 'rb')
+        file = Data::File.open("data/#{symbol}.5", 'rb')
         @quotes = Parsers::FiveMinutes.parse(file)
       else
-        file = File.open("data/#{symbol}.day", 'rb')
+        file = Data::File.open("data/#{symbol}.day", 'rb')
         @quotes = Parsers::EoD.parse(file)
       end
     end
