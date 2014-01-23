@@ -9,7 +9,7 @@ module Tdx
       end
 
       def slice(timeframe)
-        Data::Feed.new(@time_step, super.data_points)
+        Data::Feed.new(@time_step, super.to_a)
       end
     end
   end
