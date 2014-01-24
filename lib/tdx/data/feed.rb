@@ -11,6 +11,30 @@ module Tdx
       def slice(timeframe)
         Data::Feed.new(@time_step, super.to_a)
       end
+
+      def scale(new_time_step)
+        if new_time_step % @time_step == 0
+          scaled_data_points = []
+
+          @data_points.values.each_slice(new_time_step / @time_step) do |slice|
+            scaled_data_points << Data::Candlestick.new(
+              slice.last.timestamp,
+              {
+                open: slice.first.data[:open],
+                high: slice.max_by { |c| c.data[:high] }.data[:high],
+                low: slice.min_by { |c| c.data[:low] }.data[:low],
+                close: slice.last.data[:close],
+                turnover: slice.inject(0) { |sum, c| sum + c.data[:turnover] },
+                volume: slice.inject(0) { |sum, c| sum + c.data[:volume] }
+              }
+            )
+          end
+
+          Data::Feed.new(new_time_step, scaled_data_points)
+        else
+          raise ArgumentError, 'New time step must be an integral multiple of the old one'
+        end
+      end
     end
   end
 end
