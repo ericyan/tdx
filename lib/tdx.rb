@@ -1,3 +1,4 @@
+require_relative 'tdx/core_ext/date'
 require_relative 'tdx/data/feed'
 require_relative 'tdx/data/candlestick'
 require_relative 'tdx/data/file'

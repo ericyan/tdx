@@ -27,7 +27,7 @@ module Tdx
           super
 
           return Tdx::Data::Candlestick.new(
-            Date.parse(date.to_s).to_time + 3600 * 15,
+            Date.parse(date.to_s).to_eod_time,
             {
               open:     open / 100.00,
               high:     high / 100.00,
