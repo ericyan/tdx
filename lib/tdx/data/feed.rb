@@ -50,6 +50,16 @@ module Tdx
           raise ArgumentError, 'New time step must be an integral multiple of the old one'
         end
       end
+
+      def method_missing(method_name, *args, &block)
+        key = method_name.to_s.gsub(/s$/, '').to_sym
+
+        if [:open, :high, :low, :close, :turnover, :volume].include? key
+          extract(key).to_a.collect { |dp| dp.data }
+        else
+          super
+        end
+      end
     end
   end
 end
