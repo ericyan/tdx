@@ -8,6 +8,10 @@ module Tdx
         super(*args)
       end
 
+      def timestamps
+        Hash[@data_points.sort].keys
+      end
+
       def extract(element)
         timestamps = @data_points.keys
         elements = @data_points.values.collect { |dp| dp.data.fetch(element) }
