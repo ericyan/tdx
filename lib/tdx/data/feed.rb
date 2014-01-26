@@ -13,10 +13,9 @@ module Tdx
       end
 
       def extract(element)
-        timestamps = @data_points.keys
-        elements = @data_points.values.collect { |dp| dp.data.fetch(element) }
+        elements = self.to_a.collect { |dp| dp.data.fetch(element) }
 
-        Data::Feed.new(@time_step, timestamps, elements)
+        Data::Feed.new(@time_step, self.timestamps, elements)
       end
 
       def slice(timeframe)
