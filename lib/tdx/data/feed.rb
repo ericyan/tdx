@@ -9,6 +9,11 @@ module Tdx
       end
 
       def slice(timeframe)
+        timeframe = timeframe.inject({}) do |timeframe, (key, value)|
+          timeframe[key] = (value.kind_of? Time) ? value : value.to_eod_time
+          timeframe
+        end
+
         Data::Feed.new(@time_step, super.to_a)
       end
 
