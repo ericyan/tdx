@@ -8,6 +8,13 @@ module Tdx
         super(*args)
       end
 
+      def extract(element)
+        timestamps = @data_points.keys
+        elements = @data_points.values.collect { |dp| dp.data.fetch(element) }
+
+        Data::Feed.new(@time_step, timestamps, elements)
+      end
+
       def slice(timeframe)
         timeframe = timeframe.inject({}) do |timeframe, (key, value)|
           timeframe[key] = (value.kind_of? Time) ? value : value.to_eod_time
