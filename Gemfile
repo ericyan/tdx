@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'bindata'
+gemspec
+
 gem 'time-series', github: "ericyan/time-series"
