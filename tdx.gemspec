@@ -11,7 +11,10 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'bindata'
   spec.add_runtime_dependency 'time-series'
 
+  spec.add_development_dependency 'rspec'
+
   spec.files       = `git ls-files -z`.split("\x0")
+  spec.test_files  = spec.files.grep(%r{^spec/})
 
   spec.require_paths = ["lib"]
 end
