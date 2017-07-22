@@ -1,7 +1,0 @@
-require_relative 'tdx/core_ext/date'
-require_relative 'tdx/data/feed'
-require_relative 'tdx/data/candlestick'
-require_relative 'tdx/data/file'
-require_relative 'tdx/parsers/eod'
-require_relative 'tdx/parsers/five_minutes'
-require_relative 'tdx/stock'
