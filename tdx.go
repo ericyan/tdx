@@ -51,3 +51,27 @@ func (five *fiveBar) UnmarshalBinary(data []byte) error {
 
 	return nil
 }
+
+// A lcnBar is a single record in minute bar (.lc5/.lc1) files.
+type lcnBar struct {
+	Date     uint16  // higher 5 bits: years since 2004, higher 11 bits: mmdd
+	Time     uint16  // minutes since 00:00:00 (UTC+8)
+	Open     float32 // in yuan
+	High     float32 // in yuan
+	Low      float32 // in yuan
+	Close    float32 // in yuan
+	Turnover float32 // in yuan
+	Volume   uint32  // in shares
+	Reserved [4]byte // unknown
+}
+
+func (lcn *lcnBar) UnmarshalBinary(data []byte) error {
+	r := bytes.NewReader(data)
+
+	err := binary.Read(r, binary.LittleEndian, lcn)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
