@@ -9,40 +9,40 @@ import (
 
 // A dayBar is a single record in end-of-day bar (.day) files.
 type dayBar struct {
-	Date     uint32  // yyyymmdd
-	Open     uint32  // in cents
-	High     uint32  // in cents
-	Low      uint32  // in cents
-	Close    uint32  // in cents
-	Turnover float32 // in yuan
-	Volume   uint32  // in shares
-	Reserved [4]byte // unknown
+	RawDate     uint32  // yyyymmdd
+	RawOpen     uint32  // in cents
+	RawHigh     uint32  // in cents
+	RawLow      uint32  // in cents
+	RawClose    uint32  // in cents
+	RawTurnover float32 // in yuan
+	RawVolume   uint32  // in shares
+	Reserved    [4]byte // unknown
 }
 
 // A fiveBar in a single record in five-minute bar (.5) files.
 type fiveBar struct {
-	Date     uint16  // higher 5 bits: years since 2004, higher 11 bits: mmdd
-	Time     uint16  // minutes since 00:00:00 (UTC+8)
-	Open     uint32  // in cents
-	High     uint32  // in cents
-	Low      uint32  // in cents
-	Close    uint32  // in cents
-	Turnover float32 // in yuan
-	Volume   uint32  // in shares
-	Reserved [4]byte // unknown
+	RawDate     uint16  // higher 5 bits: years since 2004, higher 11 bits: mmdd
+	RawTime     uint16  // minutes since 00:00:00 (UTC+8)
+	RawOpen     uint32  // in cents
+	RawHigh     uint32  // in cents
+	RawLow      uint32  // in cents
+	RawClose    uint32  // in cents
+	RawTurnover float32 // in yuan
+	RawVolume   uint32  // in shares
+	Reserved    [4]byte // unknown
 }
 
 // A lcnBar is a single record in minute bar (.lc5/.lc1) files.
 type lcnBar struct {
-	Date     uint16  // higher 5 bits: years since 2004, higher 11 bits: mmdd
-	Time     uint16  // minutes since 00:00:00 (UTC+8)
-	Open     float32 // in yuan
-	High     float32 // in yuan
-	Low      float32 // in yuan
-	Close    float32 // in yuan
-	Turnover float32 // in yuan
-	Volume   uint32  // in shares
-	Reserved [4]byte // unknown
+	RawDate     uint16  // higher 5 bits: years since 2004, higher 11 bits: mmdd
+	RawTime     uint16  // minutes since 00:00:00 (UTC+8)
+	RawOpen     float32 // in yuan
+	RawHigh     float32 // in yuan
+	RawLow      float32 // in yuan
+	RawClose    float32 // in yuan
+	RawTurnover float32 // in yuan
+	RawVolume   uint32  // in shares
+	Reserved    [4]byte // unknown
 }
 
 // DecodeFile decodes a bar data file that has been encoded in any of
