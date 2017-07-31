@@ -36,7 +36,7 @@ type dayBar struct {
 func (bar *dayBar) Time() time.Time {
 	mmdd := int(bar.RawDate % 10000)
 
-	return time.Date(int(bar.RawDate/10000), time.Month(mmdd/100), mmdd%100, 9, 30, 0, 0, tz)
+	return time.Date(int(bar.RawDate/10000), time.Month(mmdd/100), mmdd%100, 15, 0, 0, 0, tz)
 }
 
 func (bar *dayBar) Open() float32 {
