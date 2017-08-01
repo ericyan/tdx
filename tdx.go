@@ -149,9 +149,17 @@ func (bar *lcnBar) Turnover() float32 {
 	return bar.RawTurnover
 }
 
+// Dataset is a collection of bars with metadata.
+type Dataset struct {
+	Market  string // Market identification code (ISO 10383)
+	Symbol  string // Local exchange ticker symbol
+	BarSize uint   // Length of the bar defined in minutes
+	Bars    []Bar
+}
+
 // DecodeFile decodes a bar data file that has been encoded in any of
 // the supported formats. It detects file format by the file extension.
-func DecodeFile(filepath string) ([]Bar, error) {
+func DecodeFile(filepath string) (*Dataset, error) {
 	f, err := os.Open(filepath)
 	if err != nil {
 		return nil, err
@@ -162,16 +170,33 @@ func DecodeFile(filepath string) ([]Bar, error) {
 		return nil, err
 	}
 
+	market, symbol, ext := path.Base(filepath)[0:2], path.Base(filepath)[2:8], path.Base(filepath)[8:]
+	switch market {
+	case "sh":
+		market = "XSHG"
+	case "sz":
+		market = "XSHE"
+	default:
+		return nil, fmt.Errorf("unknown market: %s", market)
+	}
+
+	var barSize uint
 	bars := make([]Bar, fi.Size()/32)
 	for i := 0; i < len(bars); i++ {
 		var bar Bar
-		switch path.Ext(filepath) {
+		switch ext {
 		case ".day":
 			bar = new(dayBar)
+			barSize = 1440
 		case ".5":
 			bar = new(fiveBar)
-		case ".lc1", ".lc5":
+			barSize = 5
+		case ".lc5":
 			bar = new(lcnBar)
+			barSize = 5
+		case ".lc1":
+			bar = new(lcnBar)
+			barSize = 1
 		default:
 			return nil, fmt.Errorf("unsupported file: %s", filepath)
 		}
@@ -184,5 +209,5 @@ func DecodeFile(filepath string) ([]Bar, error) {
 		bars[i] = bar
 	}
 
-	return bars, nil
+	return &Dataset{market, symbol, barSize, bars}, nil
 }
