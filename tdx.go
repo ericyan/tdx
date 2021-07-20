@@ -52,7 +52,7 @@ func (bar *dayBar) Low() float32 {
 }
 
 func (bar *dayBar) Close() float32 {
-	return float32(bar.RawLow) / 100
+	return float32(bar.RawClose) / 100
 }
 
 func (bar *dayBar) Volume() uint32 {
@@ -95,7 +95,7 @@ func (bar *fiveBar) Low() float32 {
 }
 
 func (bar *fiveBar) Close() float32 {
-	return float32(bar.RawLow) / 100
+	return float32(bar.RawClose) / 100
 }
 
 func (bar *fiveBar) Volume() uint32 {
